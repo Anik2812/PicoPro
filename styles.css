@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 :root {
     --primary-color: #3498db;
@@ -6,10 +6,21 @@
     --accent-color: #e74c3c;
     --text-color: #333;
     --background-color: #ecf0f1;
+    --card-background: #fff;
+    --transition-speed: 0.3s;
+}
+
+.dark-theme {
+    --primary-color: #3498db;
+    --secondary-color: #bdc3c7;
+    --accent-color: #e74c3c;
+    --text-color: #ecf0f1;
+    --background-color: #2c3e50;
+    --card-background: #34495e;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
@@ -18,15 +29,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 .container {
-    background: #fff;
-    border-radius: 10px;
+    background: var(--card-background);
+    border-radius: 20px;
     padding: 40px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     width: 90%;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 header {
@@ -38,12 +51,14 @@ h1 {
     color: var(--primary-color);
     font-size: 2.5em;
     margin-bottom: 5px;
+    transition: color var(--transition-speed);
 }
 
 .subheading {
     color: var(--secondary-color);
     font-size: 1.2em;
     font-weight: 300;
+    transition: color var(--transition-speed);
 }
 
 .question {
@@ -65,21 +80,24 @@ label {
     margin-bottom: 10px;
     font-weight: 500;
     color: var(--secondary-color);
+    transition: color var(--transition-speed);
 }
 
 input[type="text"], input[type="number"], select {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 16px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
+    background-color: var(--card-background);
+    color: var(--text-color);
 }
 
 input[type="text"]:focus, input[type="number"]:focus, select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 select {
@@ -95,10 +113,10 @@ button {
     color: #fff;
     border: none;
     padding: 12px 24px;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -119,22 +137,24 @@ button i {
 }
 
 .project-card {
-    background: #f9f9f9;
-    border-radius: 10px;
+    background: var(--card-background);
+    border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
     border-left: 5px solid var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
 
 .project-card h3 {
     margin-top: 0;
     color: var(--primary-color);
+    transition: color var(--transition-speed);
 }
 
 .progress-bar {
@@ -150,7 +170,7 @@ button i {
     width: 0;
     height: 100%;
     background: var(--primary-color);
-    transition: width 0.5s;
+    transition: width 0.5s ease;
 }
 
 .complexity-slider {
@@ -165,7 +185,7 @@ button i {
     border-radius: 5px;
     background: #ddd;
     outline: none;
-    transition: background 0.3s;
+    transition: background var(--transition-speed);
 }
 
 .complexity-slider input::-webkit-slider-thumb {
@@ -176,7 +196,7 @@ button i {
     border-radius: 50%;
     background: var(--primary-color);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all var(--transition-speed);
 }
 
 .complexity-slider input::-webkit-slider-thumb:hover {
@@ -189,6 +209,7 @@ button i {
     margin-top: 5px;
     font-size: 0.8em;
     color: var(--secondary-color);
+    transition: color var(--transition-speed);
 }
 
 @keyframes fadeIn {
@@ -207,4 +228,123 @@ button i {
     border-radius: 5px;
     margin-bottom: 15px;
     text-align: center;
+}
+
+.duration-options {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.duration-options input[type="radio"] {
+    display: none;
+}
+
+.duration-options label {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--card-background);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    margin: 0 5px;
+}
+
+.duration-options input[type="radio"]:checked + label {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-toggle-label {
+    background-color: var(--primary-color);
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    position: relative;
+    height: 26px;
+    width: 50px;
+    transition: background-color var(--transition-speed);
+}
+
+.theme-toggle-label .fa-sun {
+    color: #f39c12;
+}
+
+.theme-toggle-label .fa-moon {
+    color: #f1c40f;
+}
+
+.theme-toggle-label .ball {
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 22px;
+    width: 22px;
+    transform: translateX(0px);
+    transition: transform var(--transition-speed) ease-out;
+}
+
+#theme-toggle {
+    opacity: 0;
+    position: absolute;
+}
+
+#theme-toggle:checked + .theme-toggle-label .ball {
+    transform: translateX(24px);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.project-card:hover {
+    animation: pulse 1s infinite;
+}
+
+/* Add this new keyframe animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply the animation to project cards */
+.project-card {
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Stagger the animation for multiple cards */
+.project-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.project-card:nth-child(3) {
+    animation-delay: 0.2s;
 }
