@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PicoPro</title>
+    <title>PicoPro - Tiny Steps to Big Projects</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-lightbulb"></i> PicoPro</h1>
+        <header>
+            <h1>PicoPro <i class="fas fa-rocket"></i></h1>
+            <p class="subheading">Tiny Steps to Big Projects</p>
+        </header>
         <div id="survey">
             <div class="question active" id="q1">
                 <label for="interests">What are your main interests? (Comma-separated)</label>
@@ -30,7 +33,22 @@
                     <option value="management">Project Management</option>
                 </select>
             </div>
-            <button onclick="nextQuestion()">Next <i class="fas fa-arrow-right"></i></button>
+            <div class="question" id="q4">
+                <label for="experience">Years of experience in your field?</label>
+                <input type="number" id="experience" min="0" max="50" required>
+            </div>
+            <div class="question" id="q5">
+                <label>Preferred project complexity:</label>
+                <div class="complexity-slider">
+                    <input type="range" id="complexity" min="1" max="5" value="3">
+                    <div class="complexity-labels">
+                        <span>Beginner</span>
+                        <span>Intermediate</span>
+                        <span>Advanced</span>
+                    </div>
+                </div>
+            </div>
+            <button onclick="nextQuestion()" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
         </div>
         <div id="result"></div>
         <div class="progress-bar">

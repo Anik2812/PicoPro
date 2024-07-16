@@ -1,11 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --text-color: #333;
+    --background-color: #ecf0f1;
+}
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
+    background-color: var(--background-color);
+    color: var(--text-color);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -13,21 +21,29 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
+    background: #fff;
+    border-radius: 10px;
     padding: 40px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     width: 90%;
 }
 
-h1 {
+header {
     text-align: center;
     margin-bottom: 30px;
-    font-weight: 600;
+}
+
+h1 {
+    color: var(--primary-color);
     font-size: 2.5em;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 5px;
+}
+
+.subheading {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+    font-weight: 300;
 }
 
 .question {
@@ -47,36 +63,35 @@ h1 {
 label {
     display: block;
     margin-bottom: 10px;
-    font-weight: 300;
-    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--secondary-color);
 }
 
-input[type="text"], select {
+input[type="text"], input[type="number"], select {
     width: 100%;
     padding: 12px;
-    border: none;
-    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #ddd;
     border-radius: 5px;
-    color: #fff;
     font-size: 16px;
     transition: all 0.3s ease;
 }
 
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
 select {
     appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%232c3e50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
     padding-right: 30px;
 }
 
 button {
-    background: #4CAF50;
+    background: var(--primary-color);
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -90,9 +105,9 @@ button {
 }
 
 button:hover {
-    background: #45a049;
+    background: #2980b9;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 button i {
@@ -101,18 +116,15 @@ button i {
 
 #result {
     margin-top: 30px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 18px;
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f9f9f9;
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
-    text-align: left;
     transition: all 0.3s ease;
+    border-left: 5px solid var(--primary-color);
 }
 
 .project-card:hover {
@@ -122,13 +134,13 @@ button i {
 
 .project-card h3 {
     margin-top: 0;
-    color: #FFD700;
+    color: var(--primary-color);
 }
 
 .progress-bar {
     width: 100%;
     height: 5px;
-    background: rgba(255, 255, 255, 0.2);
+    background: #e0e0e0;
     border-radius: 5px;
     margin-top: 20px;
     overflow: hidden;
@@ -137,8 +149,46 @@ button i {
 .progress {
     width: 0;
     height: 100%;
-    background: #4CAF50;
+    background: var(--primary-color);
     transition: width 0.5s;
+}
+
+.complexity-slider {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.complexity-slider input {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.complexity-slider input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.complexity-slider input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.complexity-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: var(--secondary-color);
 }
 
 @keyframes fadeIn {
@@ -148,4 +198,13 @@ button i {
 
 .fade-in {
     animation: fadeIn 0.5s ease-in;
+}
+
+.error-message {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
 }
