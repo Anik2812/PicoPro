@@ -3,135 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Pathfinder</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            max-width: 800px;
-            width: 90%;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        .question {
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s, transform 0.5s;
-        }
-
-        .question.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 300;
-        }
-
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            color: #fff;
-            font-size: 16px;
-        }
-
-        select {
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-        }
-
-        button {
-            background: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #45a049;
-        }
-
-        #result {
-            margin-top: 30px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .project-card h3 {
-            margin-top: 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            margin-top: 20px;
-            overflow: hidden;
-        }
-
-        .progress {
-            width: 0;
-            height: 100%;
-            background: #4CAF50;
-            transition: width 0.5s;
-        }
-    </style>
+    <title>PicoPro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Project Pathfinder</h1>
+        <h1><i class="fas fa-lightbulb"></i> PicoPro</h1>
         <div id="survey">
             <div class="question active" id="q1">
                 <label for="interests">What are your main interests? (Comma-separated)</label>
-                <input type="text" id="interests" required>
+                <input type="text" id="interests" required placeholder="e.g., Web Development, AI, Design">
             </div>
             <div class="question" id="q2">
                 <label for="skills">What skills do you currently have?</label>
-                <input type="text" id="skills" required>
+                <input type="text" id="skills" required placeholder="e.g., JavaScript, Python, Photoshop">
             </div>
             <div class="question" id="q3">
                 <label for="career">What's your desired career path?</label>
@@ -144,106 +30,13 @@
                     <option value="management">Project Management</option>
                 </select>
             </div>
-            <button onclick="nextQuestion()">Next</button>
+            <button onclick="nextQuestion()">Next <i class="fas fa-arrow-right"></i></button>
         </div>
         <div id="result"></div>
         <div class="progress-bar">
             <div class="progress"></div>
         </div>
     </div>
-
-    <script>
-        let currentQuestion = 1;
-        const totalQuestions = 3;
-
-        function nextQuestion() {
-            const currentQuestionElement = document.getElementById(`q${currentQuestion}`);
-            if (currentQuestionElement.querySelector('input, select').value === '') {
-                alert('Please answer the question before proceeding.');
-                return;
-            }
-
-            currentQuestionElement.classList.remove('active');
-            currentQuestion++;
-
-            if (currentQuestion <= totalQuestions) {
-                document.getElementById(`q${currentQuestion}`).classList.add('active');
-                updateProgressBar();
-            } else {
-                showResult();
-            }
-
-            if (currentQuestion > totalQuestions) {
-                document.querySelector('button').style.display = 'none';
-            }
-        }
-
-        function updateProgressBar() {
-            const progress = (currentQuestion - 1) / totalQuestions * 100;
-            document.querySelector('.progress').style.width = `${progress}%`;
-        }
-
-        function showResult() {
-            const interests = document.getElementById('interests').value.split(',').map(i => i.trim());
-            const skills = document.getElementById('skills').value.split(',').map(s => s.trim());
-            const career = document.getElementById('career').value;
-
-            const projectSuggestions = generateProjectSuggestions(interests, skills, career);
-            
-            let resultHTML = '<h2>Suggested Projects</h2>';
-            projectSuggestions.forEach(project => {
-                resultHTML += `
-                    <div class="project-card">
-                        <h3>${project.title}</h3>
-                        <p>${project.description}</p>
-                        <p><strong>Skills to develop:</strong> ${project.skills.join(', ')}</p>
-                    </div>
-                `;
-            });
-
-            document.getElementById('result').innerHTML = resultHTML;
-        }
-
-        function generateProjectSuggestions(interests, skills, career) {
-            // This is a simplified version. In a real application, you'd have a more sophisticated
-            // algorithm to match interests, skills, and career goals with project ideas.
-            const projects = [
-                {
-                    title: "Personal Portfolio Website",
-                    description: "Create a stunning portfolio website to showcase your projects and skills.",
-                    skills: ["HTML", "CSS", "JavaScript", "Responsive Design"],
-                    careers: ["software", "design"]
-                },
-                {
-                    title: "Data Visualization Dashboard",
-                    description: "Build an interactive dashboard to visualize complex datasets.",
-                    skills: ["Python", "Data Analysis", "D3.js"],
-                    careers: ["data", "software"]
-                },
-                {
-                    title: "Mobile App Prototype",
-                    description: "Design and prototype a mobile app that solves a real-world problem.",
-                    skills: ["UX Design", "Prototyping", "User Research"],
-                    careers: ["design", "software"]
-                },
-                {
-                    title: "Digital Marketing Campaign",
-                    description: "Plan and execute a digital marketing campaign for a fictional product launch.",
-                    skills: ["Social Media Marketing", "Content Creation", "Analytics"],
-                    careers: ["marketing"]
-                },
-                {
-                    title: "Project Management Tool",
-                    description: "Develop a web-based project management tool with task tracking and team collaboration features.",
-                    skills: ["Full-stack Development", "Database Design", "UX/UI"],
-                    careers: ["software", "management"]
-                }
-            ];
-
-            return projects
-                .filter(project => project.careers.includes(career))
-                .slice(0, 2); // Return top 2 matches
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
