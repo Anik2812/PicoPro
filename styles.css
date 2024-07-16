@@ -363,6 +363,7 @@ button i {
         margin: 5px 0;
     }
 }
+
 .background-element {
     position: absolute;
     width: 10px;
@@ -380,4 +381,121 @@ button i {
     50% {
         transform: translateY(-20px) rotate(180deg);
     }
+}
+
+.interest-tags, .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    transition: all var(--transition-speed) ease;
+}
+
+.tag:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.tag .remove-tag {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.experience-visualization, .complexity-visualization {
+    height: 20px;
+    background-color: var(--input-background);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.experience-bar, .complexity-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width var(--transition-speed) ease;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close {
+    color: var(--text-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.project-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-details, .btn-save {
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-details {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.btn-save {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.btn-details:hover, .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
