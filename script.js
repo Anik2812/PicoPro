@@ -34,7 +34,11 @@ function nextQuestion() {
 }
 
 function validateInput(questionElement) {
+    if (!questionElement) return false;
+
     const input = questionElement.querySelector('input, select');
+    if (!input) return false;
+
     if (input.type === 'text' || input.tagName === 'SELECT') {
         return input.value.trim() !== '';
     } else if (input.type === 'number') {
@@ -50,7 +54,6 @@ function updateProgressBar() {
     const progress = (currentQuestion - 1) / totalQuestions * 100;
     const progressBar = document.querySelector('.progress');
     progressBar.style.width = `${progress}%`;
-    progressBar.style.transition = 'width 0.5s ease-in-out';
 }
 
 function showError(message) {
@@ -556,7 +559,7 @@ function generateProjectSuggestions(interests, skills, career, experience, compl
             difficulty: "Advanced",
             duration: "long"
         }
-    ];    
+    ];
 
     let filteredProjects = projects.filter(project => {
         const careerMatch = project.careers.includes(career);
@@ -686,71 +689,49 @@ function saveProject(index) {
     alert('Project saved successfully!');
 }
 
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
+function createTags(inputId, containerId) {
+    const input = document.getElementById(inputId);
+    const container = document.getElementById(containerId);
 
-function setTheme(theme) {
-    if (theme === 'dark') {
-        body.classList.remove('light-theme');
-        body.classList.add('dark-theme');
-        localStorage.setItem('theme', 'dark');
-    } else {
-        body.classList.remove('dark-theme');
-        body.classList.add('light-theme');
-        localStorage.setItem('theme', 'light');
-    }
-}
-
-const savedTheme = localStorage.getItem('theme') || 'dark';
-setTheme(savedTheme);
-themeToggle.checked = savedTheme === 'dark';
-
-themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-        setTheme('dark');
-    } else {
-        setTheme('light');
-    }
-});
-
-updateProgressBar();
-
-function createBackgroundElements() {
-    const container = document.querySelector('.background-decoration');
-    for (let i = 0; i < 50; i++) {
-        const element = document.createElement('div');
-        element.classList.add('background-element');
-        element.style.left = `${Math.random() * 100}vw`;
-        element.style.top = `${Math.random() * 100}vh`;
-        element.style.animationDuration = `${Math.random() * 10 + 5}s`;
-        element.style.animationDelay = `${Math.random() * 5}s`;
-        container.appendChild(element);
-    }
-}
-
-createBackgroundElements();
-
-document.querySelectorAll('input, select').forEach(input => {
-    input.addEventListener('input', () => {
-        const questionElement = input.closest('.question');
-        if (validateInput(questionElement)) {
-            questionElement.classList.add('valid');
-        } else {
-            questionElement.classList.remove('valid');
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            addTag(this.value.trim());
+            this.value = '';
         }
     });
-});
 
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('mouseover', () => {
-        button.style.transform = 'scale(1.05)';
-        button.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-    });
-    button.addEventListener('mouseout', () => {
-        button.style.transform = 'scale(1)';
-        button.style.boxShadow = 'none';
-    });
-});
+    function addTag(text) {
+        if (text === '') return;
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.textContent = text;
+        const removeBtn = document.createElement('span');
+        removeBtn.className = 'remove-tag';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.onclick = function() {
+            container.removeChild(tag);
+        };
+        tag.appendChild(removeBtn);
+        container.appendChild(tag);
+    }
+}
+
+function updateExperienceVisualization() {
+    const experience = document.getElementById('experience');
+    const bar = document.querySelector('.experience-bar');
+    if (experience && bar) {
+        bar.style.width = `${Math.min(experience.value * 2, 100)}%`;
+    }
+}
+
+function updateComplexityVisualization() {
+    const complexity = document.getElementById('complexity');
+    const bar = document.querySelector('.complexity-bar');
+    if (complexity && bar) {
+        bar.style.width = `${(complexity.value / 5) * 100}%`;
+    }
+}
 
 function lazyLoadProjectCards() {
     const options = {
@@ -773,3 +754,72 @@ function lazyLoadProjectCards() {
         observer.observe(card);
     });
 }
+
+function createBackgroundElements() {
+    const container = document.querySelector('.background-decoration');
+    for (let i = 0; i < 50; i++) {
+        const element = document.createElement('div');
+        element.classList.add('background-element');
+        element.style.left = `${Math.random() * 100}vw`;
+        element.style.top = `${Math.random() * 100}vh`;
+        element.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        element.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(element);
+    }
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const interestsInput = document.getElementById('interests');
+    const skillsInput = document.getElementById('skills');
+    if (interestsInput && document.getElementById('interest-tags')) {
+        createTags('interests', 'interest-tags');
+    }
+    if (skillsInput && document.getElementById('skill-tags')) {
+        createTags('skills', 'skill-tags');
+    }
+
+    const experienceInput = document.getElementById('experience');
+    if (experienceInput) {
+        experienceInput.addEventListener('input', updateExperienceVisualization);
+    }
+
+    const complexityInput = document.getElementById('complexity');
+    if (complexityInput) {
+        complexityInput.addEventListener('input', updateComplexityVisualization);
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('change', function() {
+            document.body.classList.toggle('light-theme');
+        });
+    }
+
+    createBackgroundElements();
+
+    document.querySelectorAll('input, select').forEach(input => {
+        input.addEventListener('input', () => {
+            const questionElement = input.closest('.question');
+            if (questionElement && validateInput(questionElement)) {
+                questionElement.classList.add('valid');
+            } else if (questionElement) {
+                questionElement.classList.remove('valid');
+            }
+        });
+    });
+
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('mouseover', () => {
+            button.style.transform = 'scale(1.05)';
+            button.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+        });
+        button.addEventListener('mouseout', () => {
+            button.style.transform = 'scale(1)';
+            button.style.boxShadow = 'none';
+        });
+    });
+
+    // Initialize progress bar
+    updateProgressBar();
+});
